@@ -1,0 +1,129 @@
+https://leetcode.com/problems/add-two-numbers-ii/
+--------------------------------------------------------------
+Soln 1:
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    ListNode reverse(ListNode l){
+        ListNode head = l;
+        ListNode prev = null;
+
+        while(head != null){
+            ListNode after = head.next;
+            head.next = prev;
+            prev = head;
+            head = after;
+        }
+
+        return prev;
+    }
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode one = reverse(l1);
+        ListNode two = reverse(l2);
+
+        int sum = 0;
+        int carry = 0;
+        ListNode ans = null;
+        ListNode res = ans;
+
+        while(one != null || two != null){
+            sum = 0;
+            if(one != null){
+                sum = one.val;
+                one = one.next;
+            }
+            if(two != null){
+                sum = sum + two.val;
+                two = two.next;
+            }
+            sum = sum + carry;
+            carry = sum / 10;
+
+            ListNode newNode = new ListNode(sum % 10);
+            newNode.next = ans;
+            ans = newNode;
+        }
+
+        if(carry != 0){
+            ListNode newNode = new ListNode(carry);
+            newNode.next = ans;
+            ans = newNode;
+        }
+
+        return ans;
+    }
+}
+
+Time complexity: O(M) + O(N) + O(MAX(M,N)
+space complexity: O(1)
+--------------------------------------------------------------------------------
+Soln2:
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        Stack<ListNode> stack1 = new Stack<>();
+        while(l1 != null){
+            stack1.push(l1);
+            l1 = l1.next;
+        }
+
+        Stack<ListNode> stack2 = new Stack<>();
+        while(l2 != null){
+            stack2.push(l2);
+            l2 = l2.next;
+        }
+
+        int sum = 0;
+        int carry = 0;
+        ListNode ans = null;
+        ListNode res = ans;
+
+        while(!stack1.isEmpty() || !stack2.isEmpty() || carry != 0){
+                    sum = carry;
+                    if(!stack1.isEmpty()){
+                        sum = sum + stack1.pop().val;
+                    }
+                    if(!stack2.isEmpty()){
+                        sum = sum + stack2.pop().val;
+                    }
+
+                    carry = sum / 10;
+
+                    ListNode newNode = new ListNode(sum % 10);
+                    newNode.next = ans;
+                    ans = newNode;
+
+        }
+
+        if(carry != 0){
+            ListNode newNode = new ListNode(carry);
+            newNode.next = ans;
+            ans = newNode;
+        }
+
+        return ans;
+    }
+}
+
+Time complexity: O(M) + O(N) + O(MAX(M,N)
+space complexity: O(M) + O(N)

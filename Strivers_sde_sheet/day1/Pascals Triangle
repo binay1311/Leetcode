@@ -1,0 +1,63 @@
+https://leetcode.com/problems/pascals-triangle/submissions/
+
+Example 1:
+
+Input: numRows = 5
+Output: [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
+Example 2:
+
+Input: numRows = 1
+Output: [[1]]
+
+        1
+       1 1
+      1 2 1
+     1 3 3 1
+-------------------------------------------------------------------
+To calculate only nth row and cth col value , formula = nCr
+ex: 5C2 = (5*4)/(2*1)
+-------------------------------------------------------------------
+To calculate all the values of nth row:
+ex: all values for 4th row:
+n=4
+int[] arr = new int[n];
+int res=1;
+for(int i=1; i<=n; i++){
+    res = res * (n-i);
+    res = res / (i+1);
+    arr[i-1] = res;
+}
+-----------------------------------------------------------------------
+To print the entire triangle:
+
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+
+        List<List<Integer>> triangle = new ArrayList<>();
+
+        if(numRows == 0){
+            return triangle;
+        }
+        List<Integer> first_row = new ArrayList<Integer>();
+        first_row.add(1);
+        triangle.add(first_row);
+
+        for(int i=1; i<numRows; i++){
+
+            List<Integer> prev_row = triangle.get(i-1);
+            List<Integer> curr_row = new ArrayList<>();
+
+            curr_row.add(1);
+
+            for(int j=1; j<i; j++){
+                curr_row.add(prev_row.get(j-1) + prev_row.get(j));
+            }
+
+            curr_row.add(1);
+            triangle.add(curr_row);
+        }
+
+        return triangle;
+
+    }
+}

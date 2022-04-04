@@ -1,0 +1,30 @@
+https://leetcode.com/problems/remove-duplicates-from-sorted-array/
+
+Optimal soln:
+---------------------------------------------------------------------------------
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int slow = 0;
+        int fast = 0;
+
+        while(fast < nums.length){
+            if(fast == 0){
+                fast++;
+            }
+            else if(fast != 0 && nums[slow] == nums[fast]){
+                fast++;
+            } else {
+                slow++;
+                int temp = nums[slow];
+                nums[slow] = nums[fast];
+                nums[fast] = temp;
+                fast++;
+            }
+        }
+
+        return slow+1;
+    }
+}
+
+Time complexity: O(N)
+space complexity: O(1)

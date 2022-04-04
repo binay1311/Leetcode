@@ -1,0 +1,52 @@
+https://leetcode.com/problems/find-the-duplicate-number/
+
+Brute force:
+-----------------------------------------------------
+class Solution {
+    public int findDuplicate(int[] nums) {
+        HashSet<Integer> set = new HashSet<>();
+        int dup = 0;
+        for(int i=0; i<nums.length; i++){
+            if(set.contains(nums[i])){
+                dup =  nums[i];
+                break;
+            }
+            else{
+                set.add(nums[i]);
+            }
+        }
+
+        return dup;
+    }
+}
+
+Time complexity: O(N)
+space complexity: O(N)
+-----------------------------------------------------------------
+Optimal soln:
+
+class Solution {
+    public int findDuplicate(int[] nums) {
+        int slow = nums[0];
+        int fast = nums[0];
+        slow = nums[slow];
+        fast = nums[nums[fast]];
+
+        while(slow != fast){
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        }
+
+        fast = nums[0];
+
+        while(slow != fast){
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+
+        return slow;
+    }
+}
+
+Time complexity = O(N)
+space complexity = O(1)

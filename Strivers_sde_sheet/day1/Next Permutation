@@ -1,0 +1,57 @@
+https://leetcode.com/problems/next-permutation/
+
+algo:
+1. a[i] <a[i+1] , indx1 = i; //traverse i from end of array
+2. a[j] > a[indx1], indx2 = j; //traverse j from end of array
+3. swap(indx1, indx2)
+4. reverse(indx1 + 1, n-1)
+
+---------------------------------------------------------------------------------
+
+class Solution {
+    public static void swap(int indx1, int indx2, int[] nums){
+        int temp = nums[indx1];
+        nums[indx1] = nums[indx2];
+        nums[indx2] = temp;
+    }
+
+    public static void reverse(int indx3, int indx4, int[] nums){
+        while(indx3 < indx4){
+            swap(indx3 , indx4, nums);
+            indx3++;
+            indx4--;
+        }
+    }
+
+    public void nextPermutation(int[] nums) {
+        if(nums == null || nums.length <= 1){
+            return;
+        }
+
+        int n = nums.length;
+        int i = nums.length - 2;
+        int indx1 = 0;
+        int indx2 = 0;
+
+        while(i >= 0 && nums[i] >= nums[i+1]){
+            i--;
+        }
+
+        indx1 = i;
+        int j = n - 1;
+
+        if(indx1 >= 0){
+            while(j > indx1){
+                if(nums[j] > nums[indx1]){
+                    indx2 = j;
+                    break;
+                }
+                j--;
+            }
+            swap(indx1, indx2, nums);
+        }
+
+        reverse(indx1 + 1 , n-1, nums);
+
+    }
+}

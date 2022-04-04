@@ -1,0 +1,84 @@
+https://leetcode.com/problems/unique-paths/
+https://www.youtube.com/watch?v=t_f0nwwdg5o
+
+Brute Force : recursive approach
+------------------------------------------------------------------------
+class Solution {
+    private int getPath(int m, int n){
+            int left = 0;
+            int top = 0;
+
+            if(m < 0 || n <0){
+                return 0;
+            }
+            if(m == 0 && n == 0){
+                return 1;
+            }
+            else{
+                left = getPath(m, n-1);
+                top = getPath(m-1, n);
+            }
+
+            return left + top;
+        }
+
+    public int uniquePaths(int m, int n) {
+        return getPath(m-1, n-1);
+    }
+}
+
+Time complexity: exponential since we are trying out all possible soln
+space complexity: exponential since its going to use stack space in recursion
+
+--------------------------------------------------------------------------------
+
+Better soln: Dynamic Programming approach
+
+class Solution {
+    private int getPath(int[][] t, int row, int col){
+        if(row < 0 || col <0){
+            return 0;
+        }
+        else if(row == 0 && col == 0){
+            return 1;
+        }
+        else if(t[row][col] != 0){
+            return t[row][col];
+        }
+        else{
+            int prev_col = getPath(t, row, col-1);
+            int prev_row = getPath(t, row-1, col);
+            t[row][col] = prev_col + prev_row;
+        }
+
+        return t[row][col];
+    }
+
+    public int uniquePaths(int m, int n) {
+        int[][] t = new int[m][n];
+        return getPath(t, m-1, n-1);
+    }
+}
+
+Time complexity: O(M * N)
+space complexity: O(M * N)
+
+Optimal soln:
+--------------------------------------------------------------------------
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int N = m + n - 2;
+        int r = m - 1;
+
+        double res = 1;
+
+        for(int i=1; i<=r; i++){
+            res = res * (N - r + i)/i;
+        }
+
+        return (int)res;
+    }
+}
+
+Time complexity: O(N)
+space complexity: O(1)

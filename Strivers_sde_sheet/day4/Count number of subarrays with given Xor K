@@ -1,0 +1,33 @@
+count subarrays with given xor
+
+https://www.interviewbit.com/problems/subarray-with-given-xor/
+
+Optimal soln:
+----------------------------------------------------------
+public class Solution {
+    public int solve(int[] A, int B) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int count = 0;
+        int xorr = 0;
+
+        for(int i=0; i<A.length; i++){
+            xorr = xorr ^ A[i];
+            if(xorr == B){
+                count++;
+            }
+            if(map.containsKey(xorr ^ B)){
+                count  = count + map.get(xorr ^ B);
+            }
+            if(map.containsKey(xorr)){
+                map.put(xorr, map.get(xorr) + 1);
+            } else {
+                map.put(xorr, 1);
+            }
+        }
+
+        return count;
+    }
+}
+
+Time complexity: O(N)
+space complexity: O(N)

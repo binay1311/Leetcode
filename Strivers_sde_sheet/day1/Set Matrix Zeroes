@@ -1,0 +1,62 @@
+https://leetcode.com/problems/set-matrix-zeroes/submissions/
+
+Time complexity: O[ M * N * (M+N) ]
+space complexity: O[ M * N ]
+
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        boolean[][] flag = new boolean[rows][cols];
+
+        for(int i=0; i<rows; i++){
+            for(int j=0; j<cols; j++){
+                if(matrix[i][j] == 0){
+
+                    int ind = i-1;
+                    while(ind >= 0){
+                        if(matrix[ind][j] != 0){
+                            flag[ind][j] = true;
+                        }
+                        ind--;
+                    }
+
+                    ind = i+1;
+                    while(ind < rows){
+                        if(matrix[ind][j] != 0){
+                            flag[ind][j] = true;
+                        }
+                        ind++;
+                    }
+
+                    ind = j-1;
+                    while(ind >= 0){
+                        if(matrix[i][ind] != 0){
+                            flag[i][ind] = true;
+                        }
+                        ind--;
+                    }
+
+                    ind = j+1;
+                    while(ind < cols){
+                        if(matrix[i][ind] != 0){
+                            flag[i][ind] = true;
+                        }
+                        ind++;
+                    }
+                }
+            }
+        }
+
+
+        for(int i=0; i<rows; i++){
+            for(int j=0; j<cols; j++){
+                if(flag[i][j]){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+    }
+}

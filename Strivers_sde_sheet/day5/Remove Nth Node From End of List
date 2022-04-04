@@ -1,0 +1,84 @@
+https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+
+Brute Force
+-----------------------------------------------------------------
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if(head.next == null){
+            System.out.print("hi");
+            return head.next;
+        }
+        int size = 0;
+        ListNode curr = head;
+        while(curr != null){
+            size++;
+            curr = curr.next;
+        }
+
+        int count = size - n + 1;
+        curr = head;
+        int i=0;
+        ListNode tmp = curr;
+
+        while(i < count){
+            tmp = curr;
+            if(i != 0){
+                curr = curr.next;
+            }
+            i++;
+        }
+        if(i == 1){
+            return curr.next;
+        }
+        tmp.next = curr.next;
+        return head;
+    }
+}
+
+Time complexity: O(N) + O(N) =~ O(2*N)
+space complexity: O(1)
+------------------------------------------------------------------------------
+Optimal soln:
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+       ListNode start = new ListNode();
+        start.next = head;
+        ListNode fast = start;
+        ListNode slow = start;
+
+        for(int i=0; i<n; i++)
+            fast = fast.next;
+
+        while(fast.next != null){
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        slow.next = slow.next.next;
+        return start.next;
+    }
+}
+
+Time complexity: O(N)
+space complexity: O(1)
