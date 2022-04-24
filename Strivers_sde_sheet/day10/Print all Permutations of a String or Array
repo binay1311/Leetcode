@@ -1,0 +1,76 @@
+https://leetcode.com/problems/permutations/
+https://www.youtube.com/watch?v=YK78FU5Ffjw&list=PLgUwDviBIf0rGlzIn_7rsaR2FQ5e6ZOL9&index=12
+-------------------------------------------------------------------------------
+Brute force:
+
+class Solution {
+    public void findPermutations
+        (int[] nums, List<List<Integer>> ans, List<Integer> items, boolean[] freq){
+
+        if(items.size() == nums.length){
+            ans.add(new ArrayList<>(items));
+            return;
+        }
+
+        for(int i=0; i<nums.length; i++){
+            if(freq[i] == false){
+                freq[i] = true;
+                items.add(nums[i]);
+                findPermutations(nums, ans, items, freq);
+                items.remove(items.size() - 1);
+                freq[i] = false;
+            }
+        }
+
+    }
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> items = new ArrayList<>();
+        boolean[] freq = new boolean[nums.length];
+
+        findPermutations(nums, ans, items, freq);
+        return ans;
+    }
+}
+
+Time complexity: O(N! * N)
+Space Complexity:  O(N)
+
+---------------------------------------------------------------------------
+Optimal soln:
+
+class Solution {
+    public void findPermutations(int index, int[] nums, List<List<Integer>> ans){
+        if(index == nums.length){
+            List<Integer> item = new ArrayList<>();
+            for(int i=0; i<nums.length; i++){
+                item.add(nums[i]);
+            }
+            ans.add(new ArrayList<>(item));
+            return;
+        }
+
+        for(int i=index; i<nums.length; i++){
+            swap(i, index, nums);
+            findPermutations(index+1, nums, ans);
+            swap(i, index, nums);
+        }
+    }
+
+    public void swap(int i, int index, int[] nums){
+        int tmp = nums[i];
+        nums[i] = nums[index];
+        nums[index] = tmp;
+    }
+
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> items = new ArrayList<>();
+
+        findPermutations(0, nums, ans);
+        return ans;
+    }
+}
+
+Time complexity: O(N! * N)
+space complexity: O(1)

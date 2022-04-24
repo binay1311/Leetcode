@@ -1,0 +1,75 @@
+https://leetcode.com/problems/combination-sum-ii/
+https://www.youtube.com/watch?v=G1fRTGRxXU8&list=PLgUwDviBIf0rGlzIn_7rsaR2FQ5e6ZOL9&index=9
+
+Brute Force
+--------------------------------------------------------------------
+class Solution {
+    public static void findUniqueCombos
+    (List<List<Integer>> ans, List<Integer> combos, int[] candidates, int target, int index){
+        if(index == candidates.length){
+            if(target == 0){
+                if(!ans.contains(combos)){
+                    ans.add(new ArrayList<>(combos));
+                }
+            }
+            return;
+        }
+
+        if(candidates[index] <= target){
+            target = target - candidates[index];
+            combos.add(candidates[index]);
+            findUniqueCombos(ans, combos, candidates, target, index+1);
+
+            target = target + candidates[index];
+            combos.remove(combos.size() - 1);
+        }
+
+        findUniqueCombos(ans, combos, candidates, target, index+1);
+    }
+
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> combos = new ArrayList<>();
+        int index = 0;
+        Arrays.sort(candidates);
+
+        findUniqueCombos(ans, combos, candidates, target, index);
+        return ans;
+    }
+}
+
+Better soln:
+---------------------------------------------------------------------
+class Solution {
+    public static void findUniqueCombos
+        (List<List<Integer>> ans, List<Integer> combos, int[] candidates, int target, int index){
+            if(target == 0){
+                ans.add(new ArrayList<>(combos));
+                return;
+            }
+
+            for(int i=index; i<candidates.length; i++){
+                if(i > index && candidates[i] == candidates[i-1]) continue;
+
+                if(candidates[i] > target){
+                    break;
+                }
+
+                combos.add(candidates[i]);
+                target = target - candidates[i];
+                findUniqueCombos(ans, combos, candidates, target, i + 1);
+                target = target + candidates[i];
+                combos.remove(combos.size() - 1);
+            }
+        }
+
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> combos = new ArrayList<>();
+        int index = 0;
+        Arrays.sort(candidates);
+
+        findUniqueCombos(ans, combos, candidates, target, index);
+        return ans;
+    }
+}
