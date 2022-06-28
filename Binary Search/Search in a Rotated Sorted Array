@@ -1,0 +1,60 @@
+https://leetcode.com/problems/search-in-rotated-sorted-array/
+
+class Solution {
+    public int findIndexOfMinElement(int[] nums){
+        int N = nums.length;
+        int start = 0;
+        int end = N-1;
+
+        while(start <= end){
+            if(nums[start] <= nums[end]){
+                return start;
+            }
+            int mid = start + (end - start)/2;
+            int prev = (mid - 1 + N) % N;
+            int next = (mid + 1) % N;
+
+            if(nums[mid] <= nums[prev] && nums[mid] <= nums[next]){
+                return mid;
+            } else if(nums[start] <= nums[mid]){
+                start = next;
+            } else if(nums[mid] <= nums[end]){
+                end = prev;
+            }
+        }
+        return -1;
+    }
+
+    public int search(int[] nums, int target) {
+        int index = findIndexOfMinElement(nums);
+        if(nums[index] == target){
+            return index;
+        }
+
+        int N = nums.length;
+        int start = 0, end = N - 1;
+        if(target >= nums[start] && target <= nums[(index - 1 + N) % N]){
+            end = (index - 1 + N) % N;
+        } else if(target >= nums[index] && target <= nums[end]) {
+            start = index;
+        } else {
+            return -1;
+        }
+
+        while(start <= end){
+            int mid = start + (end - start)/2;
+            if(nums[mid] == target){
+                return mid;
+            } else if(target <= nums[mid]){
+                end = (mid - 1 + N) % N;
+            } else {
+                start = (mid + 1) % N;
+            }
+        }
+
+        return -1;
+    }
+}
+
+Time complexity: O(2 * NlogN)
+space complexity: O(1)

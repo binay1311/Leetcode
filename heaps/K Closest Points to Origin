@@ -1,0 +1,30 @@
+https://leetcode.com/problems/k-closest-points-to-origin/
+https://www.youtube.com/watch?v=XC4EotTewro&list=PL_z_8CaSLPWdtY9W22VjnPxG30CXNZpI9&index=8
+
+class Solution {
+    public int[][] kClosest(int[][] points, int k) {
+        PriorityQueue<int[]> maxheap = new PriorityQueue<>(
+            (a,b) -> (b[0]*b[0] + b[1]*b[1]) - (a[0]*a[0] + a[1]*a[1])
+        );
+
+        for(int[] i : points){
+            maxheap.add(i);
+
+            if(maxheap.size() > k){
+                maxheap.poll();
+            }
+        }
+
+        int[][] ans = new int[k][2];
+        int count = 0;
+        while(maxheap.size() != 0){
+            ans[count] = maxheap.poll();
+            count++;
+        }
+
+        return ans;
+    }
+}
+
+Time complexity: O(NlogK)
+space complexity: O(2*K)

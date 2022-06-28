@@ -1,0 +1,18 @@
+We use PriorityQueue class to implement Heaps in Java.
+
+MinHeap is implemented as follows:
+PriorityQueue<Integer> pQueue = new PriorityQueue<Integer>();
+(min elements at top of the heap)
+
+MaxHeap in implemented as :
+PriorityQueue<Integer> pQueue = new PriorityQueue<Integer>(Collections.reverseOrder());
+(max elements at top of the heap)
+
+heaps should be used when:
+1. find kth
+2. smallest/largest element
+
+for kth smallest element - use maxheap
+
+for kth largest element - use minheap
+

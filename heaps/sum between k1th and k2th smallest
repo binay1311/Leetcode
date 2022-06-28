@@ -1,0 +1,37 @@
+https://practice.geeksforgeeks.org/problems/sum-of-elements-between-k1th-and-k2th-smallest-elements3133/1/#
+https://www.youtube.com/watch?v=3ioQQQrnw4Q&list=PL_z_8CaSLPWdtY9W22VjnPxG30CXNZpI9&index=10
+
+class Solution {
+    public static long kthsmallest(long A[], long k){
+        PriorityQueue<Long> maxheap = new PriorityQueue<>(Collections.reverseOrder());
+
+        for(int i=0; i<A.length; i++){
+            maxheap.add(A[i]);
+
+            if(maxheap.size() > (int)k){
+                maxheap.poll();
+            }
+        }
+
+        return maxheap.poll();
+    }
+
+    public static long sumBetweenTwoKth(long A[], long N, long K1, long K2)
+    {
+        long k1th = kthsmallest(A, K1);
+        long k2th = kthsmallest(A, K2);
+
+        long sum = 0;
+        for(int i=0; i<A.length; i++){
+            if(A[i] > k1th && A[i] < k2th){
+                sum = sum + A[i];
+            }
+        }
+
+        return sum;
+    }
+
+}
+
+Time complexity: O(Nlog(k1) + Nlog(k2) + N)
+space complexity: O(k1 + k2)

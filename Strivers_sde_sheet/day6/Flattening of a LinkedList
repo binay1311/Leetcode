@@ -3,6 +3,20 @@ https://takeuforward.org/data-structure/flattening-a-linked-list/
 
 Optimal soln:
 --------------------------------------------------------------------------
+class Node
+{
+	int data;
+	Node next;
+	Node bottom;
+
+	Node(int d)
+	{
+		data = d;
+		next = null;
+		bottom = null;
+	}
+}
+
 class TUF
 {
     Node mergeTwoLists(Node a, Node b) {

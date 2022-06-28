@@ -25,7 +25,30 @@ class Solution {
 
 Time complexity : O(N*N)
 space complexity: O(N)
+---------------------------------------------------------------------------------
+Better Soln:
 
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int max = 0;
+        Set < Character > set = new HashSet < > ();
+        int l = 0;
+        for (int r = 0; r < str.length(); r++){             // outer loop for traversing the string
+             if (set.contains(str.charAt(r))){              //if duplicate element is found
+                 while (l < r && set.contains(str.charAt(r))) {
+                     set.remove(str.charAt(l));
+                     l++;
+                 }
+             }
+             set.add(str.charAt(r));
+             max = Math.max(max, r - l + 1);
+        }
+        return max;
+    }
+}
+
+Time Complexity: O( 2*N ) (sometimes left and right both have to travel complete array)
+Space Complexity: O(N) where N is the size of HashSet taken for storing the elements
 ----------------------------------------------------------------------------------
 Optimal soln:
 

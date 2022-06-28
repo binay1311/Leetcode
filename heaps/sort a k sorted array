@@ -1,0 +1,30 @@
+https://www.youtube.com/watch?v=dYfM6J1y0mU&list=PL_z_8CaSLPWdtY9W22VjnPxG30CXNZpI9&index=4
+https://www.codingninjas.com/codestudio/problems/nearly-sorted_982937?leftPanelTab=0
+
+-----------------------------------------------------------------------------
+import java.util.*;
+public class Solution {
+  public static int[] nearlySorted(int[] array, int n, int k) {
+	PriorityQueue<Integer> minheap =
+		new PriorityQueue<Integer>();
+
+	  int count = 0;
+	  for(int i=0; i <n; i++){
+		  minheap.add(array[i]);
+		  if(minheap.size() > k){
+			  array[count] = minheap.poll();
+			  count++;
+		  }
+	  }
+
+	  while(minheap.isEmpty() == false){
+		  array[count] = minheap.poll();
+		  count++;
+	  }
+
+	 return array;
+  }
+}
+
+Time complexity: O(NlogK)
+space complexity: O(K)

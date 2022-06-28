@@ -8,7 +8,11 @@ class Solution {
 
         for(int i : nums1){
             for(int j : nums2){
-                map.put(i+j, map.getOrDefault(i+j, 0) + 1);
+                if(map.containsKey(i+j)){
+                    map.put(i+j, map.get(i+j) + 1);
+                } else {
+                   map.put(i+j, 1);
+                }
             }
         }
 
@@ -16,8 +20,10 @@ class Solution {
 
         for(int k : nums3){
             for(int l : nums4){
-                int sum = k + l;
-                count = count + map.getOrDefault(-sum, 0);
+                int sum = -(k + l);
+                if(map.containsKey(sum)){
+                   count = count + map.get(sum);
+                }
             }
         }
 

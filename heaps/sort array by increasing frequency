@@ -1,0 +1,39 @@
+https://leetcode.com/problems/sort-array-by-increasing-frequency/
+https://www.youtube.com/watch?v=hLR5aMzYGGk&list=PL_z_8CaSLPWdtY9W22VjnPxG30CXNZpI9&index=7
+
+class Solution {
+    public int[] frequencySort(int[] nums) {
+        int[] arr = new int[nums.length];
+        int start = 0;
+
+        PriorityQueue<Map.Entry<Integer, Integer>> minheap = new PriorityQueue<>(
+            (a, b) -> a.getValue() == b.getValue()
+            ? b.getKey() - a.getKey() : a.getValue() - b.getValue());
+
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i=0; i<nums.length; i++){
+            if(map.containsKey(nums[i])){
+                map.put(nums[i], map.get(nums[i]) + 1);
+            } else {
+                map.put(nums[i], 1);
+            }
+        }
+
+        for(Map.Entry<Integer, Integer> item : map.entrySet()){
+            minheap.add(item);
+        }
+
+        while(minheap.size() != 0){
+            int key = minheap.peek().getKey();
+            int freq = minheap.peek().getValue();
+
+            for(int i=start; i<start + freq; i++){
+                arr[i] = key;
+            }
+            start = start + freq;
+            minheap.poll();
+        }
+
+        return arr;
+    }
+}

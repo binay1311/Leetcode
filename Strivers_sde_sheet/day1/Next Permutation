@@ -1,7 +1,7 @@
 https://leetcode.com/problems/next-permutation/
 
 algo:
-1. a[i] <a[i+1] , indx1 = i; //traverse i from end of array
+1. a[i] < a[i+1], indx1 = i; //traverse i from end of array
 2. a[j] > a[indx1], indx2 = j; //traverse j from end of array
 3. swap(indx1, indx2)
 4. reverse(indx1 + 1, n-1)
